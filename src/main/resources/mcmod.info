@@ -1,0 +1,19 @@
+[
+  {
+    "modid": "rpgloot",
+    "name": "RPG Loot",
+    "description": "Adds RPG-like looting to minecraft.",
+    "version": "1.12.2-1.11",
+    "mcversion": "1.12.2",
+    "url": "",
+    "updateUrl": "",
+    "authors": [
+      "FusionLord",
+      "ACGaming"
+    ],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]
