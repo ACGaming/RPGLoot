@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
 import net.fusionlord.rpgloot.config.RPGConfig;
-import net.fusionlord.rpgloot.network.PacketHandler;
+import net.fusionlord.rpgloot.handlers.PacketHandler;
 import net.fusionlord.rpgloot.packets.CorpseSyncPacket;
 import net.fusionlord.rpgloot.packets.DisposePacket;
 import net.fusionlord.rpgloot.packets.LootPacket;

@@ -1,4 +1,4 @@
-package net.fusionlord.rpgloot.network;
+package net.fusionlord.rpgloot.handlers;
 
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

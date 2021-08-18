@@ -10,14 +10,14 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 import net.fusionlord.rpgloot.entities.EntityCorpse;
-import net.fusionlord.rpgloot.handlers.CommonEvents;
+import net.fusionlord.rpgloot.handlers.CommonEventHandler;
 import net.fusionlord.rpgloot.handlers.GUIHandler;
 
 public class CommonProxy
 {
     public void preInit(FMLPreInitializationEvent event)
     {
-        MinecraftForge.EVENT_BUS.register(new CommonEvents());
+        MinecraftForge.EVENT_BUS.register(new CommonEventHandler());
     }
 
     public void init(FMLInitializationEvent event)

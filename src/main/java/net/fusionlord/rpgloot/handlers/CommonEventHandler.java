@@ -13,7 +13,7 @@ import net.fusionlord.rpgloot.config.RPGConfig;
 import net.fusionlord.rpgloot.entities.EntityCorpse;
 
 @EventBusSubscriber(modid = "rpgloot")
-public class CommonEvents
+public class CommonEventHandler
 {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onLivingDrops(LivingDropsEvent event)

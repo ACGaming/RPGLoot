@@ -1,8 +1,8 @@
 {
-	"looting.stealing": {
-		"category": "master",
-		"sounds": [
-			"rpgloot:looting/stealing"
-		]
-	}
+  "looting.stealing": {
+    "category": "master",
+    "sounds": [
+      "rpgloot:looting/stealing"
+    ]
+  }
 }
