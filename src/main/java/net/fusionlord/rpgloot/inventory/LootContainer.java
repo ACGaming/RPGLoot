@@ -6,6 +6,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import net.fusionlord.rpgloot.config.RPGConfig;
 import net.fusionlord.rpgloot.entities.EntityCorpse;
 
 public class LootContainer extends Container
@@ -60,7 +61,14 @@ public class LootContainer extends Container
 
     public boolean canInteractWith(EntityPlayer player)
     {
-        return this.corpse.isUsableByPlayer(player);
+        if (RPGConfig.playerStealing)
+        {
+            return true;
+        }
+        else
+        {
+            return this.corpse.isUsableByPlayer(player);
+        }
     }
 
     private void bindPlayerInventory(InventoryPlayer playerInventory)

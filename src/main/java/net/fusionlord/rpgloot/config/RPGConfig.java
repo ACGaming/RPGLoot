@@ -29,7 +29,7 @@ public class RPGConfig
     public static int corpseDecayTime = -1;
 
     @Name("Collect drops")
-    @Comment({"Should we collect drops in the corpse?"})
+    @Comment({"Drops are collected in the corpse."})
     public static boolean collectDrops = true;
 
     @Name("Mob list is blacklist")
@@ -45,7 +45,7 @@ public class RPGConfig
     public static boolean emptyCorpses = false;
 
     @Name("Stealing")
-    @Comment({"Players can steal loot from foreign player's corpses."})
+    @Comment({"Players can steal foreign player's loot from corpses."})
     public static boolean playerStealing = false;
 
     @Name("Mobs list")

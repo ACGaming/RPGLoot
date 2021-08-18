@@ -8,6 +8,9 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.monster.EntitySpider;
+import net.minecraft.entity.passive.EntityAmbientCreature;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
@@ -54,11 +57,11 @@ public class CorpseRenderFactory implements IRenderFactory<EntityCorpse>
                 GlStateManager.rotate((int) entInstance.prevRotationYaw, 0.0F, 1.0F, 0.0F);
                 if ((entInstance.getEntityBoundingBox()).maxY > 1.5D)
                     GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
-                if (entInstance instanceof net.minecraft.entity.monster.EntitySpider)
+                if (entInstance instanceof EntitySpider)
                 {
                     GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
                 }
-                else if (entInstance instanceof net.minecraft.entity.passive.EntityAnimal || entInstance instanceof net.minecraft.entity.passive.EntityAmbientCreature)
+                else if (entInstance instanceof EntityAnimal || entInstance instanceof EntityAmbientCreature)
                 {
                     GlStateManager.rotate(90.0F, 0.0F, 1.0F, 0.0F);
                     GlStateManager.translate((float) ((entInstance.getEntityBoundingBox()).maxZ - (entInstance.getEntityBoundingBox()).minZ) / 2.0F, 0.0F, 0.0F);
