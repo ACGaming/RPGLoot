@@ -29,11 +29,8 @@ import net.fusionlord.rpgloot.packets.ReqCorpseSyncPacket;
 public class EntityCorpse extends Entity implements IInventory
 {
     private List<ItemStack> drops;
-
     private UUID owner;
-
     private NBTTagCompound oldEntityData;
-
     private boolean dispose;
 
     public EntityCorpse(World worldIn)
@@ -50,10 +47,14 @@ public class EntityCorpse extends Entity implements IInventory
         this(worldIn);
         copyData(entityLivingBase);
         if (RPGConfig.collectDrops)
+        {
             addDrops(entityDrops);
+        }
         setLocationAndAngles(entityLivingBase.posX, entityLivingBase.posY, entityLivingBase.posZ, 0.0F, 0.0F);
         if (player != null)
+        {
             this.owner = player.getPersistentID();
+        }
     }
 
     public int getSizeInventory()
@@ -69,7 +70,9 @@ public class EntityCorpse extends Entity implements IInventory
     public ItemStack getStackInSlot(int index)
     {
         if (index >= this.drops.size())
+        {
             return ItemStack.EMPTY;
+        }
         return this.drops.get(index);
     }
 
@@ -85,7 +88,9 @@ public class EntityCorpse extends Entity implements IInventory
             }
             ItemStack itemstack = currentStack.splitStack(count);
             if (currentStack.getCount() == 0)
+            {
                 this.drops.remove(currentStack);
+            }
             return itemstack;
         }
         return ItemStack.EMPTY;
@@ -118,7 +123,9 @@ public class EntityCorpse extends Entity implements IInventory
         for (int i = 0; i < this.drops.size(); i++)
         {
             if (this.drops.get(i) == ItemStack.EMPTY)
+            {
                 this.drops.remove(i);
+            }
         }
         RPGLoot.INSTANCE.getPacketHandler().sendToAllAround(new CorpseSyncPacket(this), new NetworkRegistry.TargetPoint(this.dimension, this.posX, this.posY, this.posZ, 64.0D));
     }
@@ -134,7 +141,7 @@ public class EntityCorpse extends Entity implements IInventory
 
     public boolean isItemValidForSlot(int index, ItemStack stack)
     {
-        return true;
+        return false;
     }
 
     public int getField(int id)
@@ -201,9 +208,13 @@ public class EntityCorpse extends Entity implements IInventory
     {
         super.onEntityUpdate();
         if ((getEntityClass() == null || getEntityClass().isEmpty()) && this.world.isRemote)
+        {
             RPGLoot.INSTANCE.getPacketHandler().sendToServer(new ReqCorpseSyncPacket(this));
+        }
         if (getPosition().getY() > 1)
+        {
             move(MoverType.SELF, 0.0D, -0.15D, 0.0D);
+        }
         if (this.world.isRemote && this.rand.nextFloat() <= RPGConfig.particles.chance / 100.0F)
         {
             float x = (float) this.posX - 0.5F;
@@ -224,7 +235,9 @@ public class EntityCorpse extends Entity implements IInventory
         }
         int decayTime = RPGConfig.corpseDecayTime;
         if ((decayTime > -1 && this.ticksExisted / 20 / 60 > decayTime) || this.dispose)
+        {
             setDead();
+        }
     }
 
     public boolean canBeCollidedWith()
@@ -254,7 +267,9 @@ public class EntityCorpse extends Entity implements IInventory
             this.drops = new ArrayList<>();
             NBTTagCompound dropsTag = tagCompound.getCompoundTag("drops");
             for (int i = 0; i < count; i++)
+            {
                 this.drops.add(new ItemStack(dropsTag.getCompoundTag("drop:".concat(String.valueOf(i)))));
+            }
         }
     }
 
@@ -318,7 +333,9 @@ public class EntityCorpse extends Entity implements IInventory
         for (EntityItem entityItem : itemEntities)
         {
             if (entityItem == null)
+            {
                 continue;
+            }
             addDrop(entityItem.getItem());
         }
     }
@@ -336,7 +353,9 @@ public class EntityCorpse extends Entity implements IInventory
     private void addDrop(ItemStack itemStack)
     {
         if (itemStack == null)
+        {
             return;
+        }
         for (ItemStack currentStack : this.drops)
         {
             if (ItemStack.areItemStacksEqual(currentStack, itemStack) && currentStack.getCount() < getInventoryStackLimit())

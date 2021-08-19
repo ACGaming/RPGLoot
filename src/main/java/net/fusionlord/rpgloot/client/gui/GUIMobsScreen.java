@@ -17,11 +17,8 @@ import net.minecraftforge.fml.common.Loader;
 public class GUIMobsScreen extends GuiConfig
 {
     protected GuiButtonExt nextMod;
-
     protected GuiButtonExt prevMod;
-
     protected Map<String, List<IConfigElement>> modElements = Maps.newHashMap();
-
     protected int index = 0;
 
     public GUIMobsScreen(GuiConfig guiConfig)

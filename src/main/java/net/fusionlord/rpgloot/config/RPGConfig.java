@@ -19,14 +19,14 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import net.fusionlord.rpgloot.RPGLoot;
 
-@Config(modid = "rpgloot")
-@EventBusSubscriber(modid = "rpgloot")
+@Config(modid = RPGLoot.MODID, name = "RPGLoot")
+@EventBusSubscriber(modid = RPGLoot.MODID)
 public class RPGConfig
 {
     @Name("Corpse life time")
     @RangeInt(min = -1)
-    @Comment({"Time in minutes before corpses decay."})
-    public static int corpseDecayTime = -1;
+    @Comment({"Time in minutes before corpses decay. Set to -1 for no decay."})
+    public static int corpseDecayTime = 10;
 
     @Name("Collect drops")
     @Comment({"Drops are collected in the corpse."})
@@ -44,7 +44,7 @@ public class RPGConfig
     @Comment({"Corpses with no loot are allowed to spawn."})
     public static boolean emptyCorpses = false;
 
-    @Name("Stealing")
+    @Name("Loot stealing")
     @Comment({"Players can steal foreign player's loot from corpses."})
     public static boolean playerStealing = false;
 
@@ -55,6 +55,10 @@ public class RPGConfig
     @Name("Particles")
     @Comment({"Change corpse particle settings."})
     public static ParticleCategory particles = new ParticleCategory();
+
+    @Name("Debug")
+    @Comment({"Change debug settings."})
+    public static DebugCategory debug = new DebugCategory();
 
     public static void initializeMobList()
     {
@@ -67,7 +71,7 @@ public class RPGConfig
                 RPGLoot.logger.info("Registering: " + rl);
             }
         }
-        ConfigManager.sync("rpgloot", Config.Type.INSTANCE);
+        ConfigManager.sync(RPGLoot.MODID, Config.Type.INSTANCE);
     }
 
     public static boolean isBlackListed(Entity entity)
@@ -84,9 +88,10 @@ public class RPGConfig
     @SubscribeEvent
     public static void onConfigChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event)
     {
-        if (event.getModID().equals("rpgloot"))
+        if (event.getModID().equals(RPGLoot.MODID))
         {
-            ConfigManager.sync("rpgloot", Config.Type.INSTANCE);
+            RPGLoot.logger.info("Config changed");
+            ConfigManager.sync(RPGLoot.MODID, Config.Type.INSTANCE);
         }
     }
 
@@ -112,5 +117,12 @@ public class RPGConfig
         @Comment({"Particle chance per tick."})
         @RangeInt(min = 0, max = 100)
         public int chance = 15;
+    }
+
+    public static class DebugCategory
+    {
+        @Name("Logging")
+        @Comment({"Debug messages will be printed in the log file."})
+        public boolean enableDebugLogging = false;
     }
 }

@@ -14,9 +14,7 @@ import net.fusionlord.rpgloot.packets.DisposePacket;
 public class LootGUI extends GuiContainer
 {
     private final EntityCorpse corpse;
-
     private final EntityPlayer player;
-
     private GuiButton dispose;
 
     public LootGUI(LootContainer lootContainer, EntityCorpse entCorpse, EntityPlayer entPlayer)
@@ -35,7 +33,7 @@ public class LootGUI extends GuiContainer
 
     protected void drawGuiContainerBackgroundLayer(float f, int x, int y)
     {
-        this.mc.renderEngine.bindTexture(new ResourceLocation("rpgloot", "textures/loottable.png"));
+        this.mc.renderEngine.bindTexture(new ResourceLocation(RPGLoot.MODID, "textures/loottable.png"));
         drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 177);
         for (Slot s : this.inventorySlots.inventorySlots)
             drawTexturedModalRect(this.guiLeft + s.xPos - 1, this.guiTop + s.yPos - 1, 176, 0, 20, 20);

@@ -24,7 +24,9 @@ public class ReqCorpseSyncPacket extends CorpsePacket
             World world = (ctx.getServerHandler()).player.world;
             Entity entity = world.getEntityByID(message.corpseID);
             if (entity instanceof EntityCorpse)
+            {
                 ((EntityCorpse) entity).markDirty();
+            }
             return null;
         }
     }

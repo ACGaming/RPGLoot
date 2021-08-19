@@ -16,16 +16,15 @@ import net.fusionlord.rpgloot.packets.DisposePacket;
 import net.fusionlord.rpgloot.packets.LootPacket;
 import net.fusionlord.rpgloot.packets.ReqCorpseSyncPacket;
 
-@Mod(modid = "rpgloot", name = "RPGLoot", version = "1.11", guiFactory = "net.fusionlord.rpgloot.client.gui.GUIFactory", acceptedMinecraftVersions = "[1.12.2]")
+@Mod(modid = RPGLoot.MODID, name = RPGLoot.MODNAME, version = RPGLoot.VERSION, guiFactory = "net.fusionlord.rpgloot.client.gui.GUIFactory", acceptedMinecraftVersions = "[1.12.2]")
 public class RPGLoot
 {
     public static final String MODID = "rpgloot";
     public static final String MODNAME = "RPGLoot";
     public static final String VERSION = "1.11";
-
     public static final Logger logger = new Logger();
 
-    @Instance("rpgloot")
+    @Instance(RPGLoot.MODID)
     public static RPGLoot INSTANCE;
 
     @SidedProxy(clientSide = "net.fusionlord.rpgloot.client.ClientProxy", serverSide = "net.fusionlord.rpgloot.CommonProxy")
@@ -60,7 +59,7 @@ public class RPGLoot
 
     private void setUpPacketHandler()
     {
-        this.packetHandler = new PacketHandler("RPGLoot");
+        this.packetHandler = new PacketHandler(RPGLoot.MODNAME);
         this.packetHandler.registerMessage(LootPacket.HANDLER.class, LootPacket.class, Side.SERVER);
         this.packetHandler.registerMessage(DisposePacket.HANDLER.class, DisposePacket.class, Side.SERVER);
         this.packetHandler.registerMessage(ReqCorpseSyncPacket.HANDLER.class, ReqCorpseSyncPacket.class, Side.SERVER);

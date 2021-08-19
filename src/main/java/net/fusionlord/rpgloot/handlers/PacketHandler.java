@@ -8,7 +8,6 @@ import net.minecraftforge.fml.relauncher.Side;
 public class PacketHandler
 {
     private final SimpleNetworkWrapper handler;
-
     private int packetCount = 0;
 
     public PacketHandler(String channelName)

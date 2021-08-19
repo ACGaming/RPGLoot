@@ -23,7 +23,7 @@ public class CommonProxy
     public void init(FMLInitializationEvent event)
     {
         NetworkRegistry.INSTANCE.registerGuiHandler(RPGLoot.INSTANCE, new GUIHandler());
-        EntityRegistry.registerModEntity(new ResourceLocation("rpgloot", "corpse"), EntityCorpse.class, "rpgloot_corpse", 0, RPGLoot.INSTANCE, 64, 20, false);
+        EntityRegistry.registerModEntity(new ResourceLocation(RPGLoot.MODID, "corpse"), EntityCorpse.class, "rpgloot_corpse", 0, RPGLoot.INSTANCE, 64, 20, false);
     }
 
     public void postInit(FMLPostInitializationEvent event) {}

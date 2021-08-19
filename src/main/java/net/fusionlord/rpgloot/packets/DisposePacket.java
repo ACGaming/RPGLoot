@@ -20,8 +20,10 @@ public class DisposePacket extends CorpsePacket
         public IMessage onMessage(DisposePacket message, MessageContext ctx)
         {
             EntityCorpse corpse = (EntityCorpse) (ctx.getServerHandler()).player.world.getEntityByID(message.corpseID);
-            if (corpse.lootToPlayer((ctx.getServerHandler()).player))
+            if (corpse != null && corpse.lootToPlayer((ctx.getServerHandler()).player))
+            {
                 corpse.dispose();
+            }
             return null;
         }
     }

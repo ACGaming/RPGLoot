@@ -9,10 +9,11 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 
+import net.fusionlord.rpgloot.RPGLoot;
 import net.fusionlord.rpgloot.config.RPGConfig;
 import net.fusionlord.rpgloot.entities.EntityCorpse;
 
-@EventBusSubscriber(modid = "rpgloot")
+@EventBusSubscriber(modid = RPGLoot.MODID)
 public class CommonEventHandler
 {
     @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -24,7 +25,10 @@ public class CommonEventHandler
         }
         if (!(event.getEntity()).world.isRemote && !RPGConfig.isBlackListed(event.getEntityLiving()))
         {
-            //RPGLoot.logger.info("Event drops :" + event.getDrops());
+            if (RPGConfig.debug.enableDebugLogging)
+            {
+                RPGLoot.logger.info("Event drops: " + event.getDrops());
+            }
             if (!RPGConfig.emptyCorpses && event.getDrops().isEmpty())
             {
                 return;
@@ -41,7 +45,7 @@ public class CommonEventHandler
     public static void registerEntities(RegistryEvent.Register<EntityEntry> event)
     {
         EntityEntry entry = new EntityEntry(EntityCorpse.class, "corpse");
-        entry.setRegistryName(new ResourceLocation("rpgloot", "corpse"));
+        entry.setRegistryName(new ResourceLocation(RPGLoot.MODID, "corpse"));
         event.getRegistry().register(entry);
     }
 }

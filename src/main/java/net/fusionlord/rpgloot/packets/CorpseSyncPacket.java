@@ -44,7 +44,9 @@ public class CorpseSyncPacket extends CorpsePacket
             World world = RPGLoot.proxy.getWorld();
             Entity entity = world.getEntityByID(message.corpseID);
             if (entity instanceof EntityCorpse)
+            {
                 entity.readFromNBT(message.corpseTag);
+            }
             return null;
         }
     }

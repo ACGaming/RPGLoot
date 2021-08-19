@@ -16,6 +16,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 import com.mojang.authlib.GameProfile;
+import net.fusionlord.rpgloot.RPGLoot;
+import net.fusionlord.rpgloot.config.RPGConfig;
 import net.fusionlord.rpgloot.entities.EntityCorpse;
 
 public class CorpseRenderFactory implements IRenderFactory<EntityCorpse>
@@ -51,35 +53,44 @@ public class CorpseRenderFactory implements IRenderFactory<EntityCorpse>
                     Class<?> entClazz = Class.forName(entClass);
                     entInstance = (Entity) entClazz.getConstructor(new Class[] {World.class}).newInstance(new Object[] {corpse.world});
                     if (corpse.getOldEntityData() != null)
+                    {
                         entInstance.readFromNBT(corpse.getOldEntityData());
+                    }
                 }
-                GlStateManager.translate(0.0D, ((entInstance.getEntityBoundingBox()).maxX - (entInstance.getEntityBoundingBox()).minX) / 2.0D, 0.0D);
-                GlStateManager.rotate((int) entInstance.prevRotationYaw, 0.0F, 1.0F, 0.0F);
-                if ((entInstance.getEntityBoundingBox()).maxY > 1.5D)
-                    GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
-                if (entInstance instanceof EntitySpider)
+                if (entInstance != null)
                 {
-                    GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
+                    GlStateManager.translate(0.0D, ((entInstance.getEntityBoundingBox()).maxX - (entInstance.getEntityBoundingBox()).minX) / 2.0D, 0.0D);
+
+                    GlStateManager.rotate((int) entInstance.prevRotationYaw, 0.0F, 1.0F, 0.0F);
+                    if ((entInstance.getEntityBoundingBox()).maxY > 1.5D)
+                        GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
+                    if (entInstance instanceof EntitySpider)
+                    {
+                        GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
+                    }
+                    else if (entInstance instanceof EntityAnimal || entInstance instanceof EntityAmbientCreature)
+                    {
+                        GlStateManager.rotate(90.0F, 0.0F, 1.0F, 0.0F);
+                        GlStateManager.translate((float) ((entInstance.getEntityBoundingBox()).maxZ - (entInstance.getEntityBoundingBox()).minZ) / 2.0F, 0.0F, 0.0F);
+                    }
+                    else if (entInstance instanceof EntityOtherPlayerMP)
+                    {
+                        GlStateManager.rotate(180.0F, 1.0F, 0.0F, 0.0F);
+                        GlStateManager.rotate(90.0F, 0.0F, 0.0F, 1.0F);
+                        GlStateManager.translate(0.0F, 0.0F, (float) ((entInstance.getEntityBoundingBox()).maxZ - (entInstance.getEntityBoundingBox()).minZ) / 2.0F);
+                    }
+                    GlStateManager.translate(0.0F, (float) -((entInstance.getEntityBoundingBox()).maxY - (entInstance.getEntityBoundingBox()).minY) / 2.0F, 0.0F);
+                    this.renderManager.setRenderShadow(false);
+                    this.renderManager.renderEntity(entInstance, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F, false);
+                    GlStateManager.popMatrix();
                 }
-                else if (entInstance instanceof EntityAnimal || entInstance instanceof EntityAmbientCreature)
-                {
-                    GlStateManager.rotate(90.0F, 0.0F, 1.0F, 0.0F);
-                    GlStateManager.translate((float) ((entInstance.getEntityBoundingBox()).maxZ - (entInstance.getEntityBoundingBox()).minZ) / 2.0F, 0.0F, 0.0F);
-                }
-                else if (entInstance instanceof EntityOtherPlayerMP)
-                {
-                    GlStateManager.rotate(180.0F, 1.0F, 0.0F, 0.0F);
-                    GlStateManager.rotate(90.0F, 0.0F, 0.0F, 1.0F);
-                    GlStateManager.translate(0.0F, 0.0F, (float) ((entInstance.getEntityBoundingBox()).maxZ - (entInstance.getEntityBoundingBox()).minZ) / 2.0F);
-                }
-                GlStateManager.translate(0.0F, (float) -((entInstance.getEntityBoundingBox()).maxY - (entInstance.getEntityBoundingBox()).minY) / 2.0F, 0.0F);
-                this.renderManager.setRenderShadow(false);
-                this.renderManager.renderEntity(entInstance, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F, false);
-                GlStateManager.popMatrix();
             }
             catch (Exception exception)
             {
-                //RPGLoot.logger.error(exception);
+                if (RPGConfig.debug.enableDebugLogging)
+                {
+                    RPGLoot.logger.error(exception);
+                }
                 GlStateManager.popMatrix();
             }
         }

@@ -16,7 +16,9 @@ public class CorpseSyncPacketHandler implements IMessageHandler<CorpseSyncPacket
         WorldClient worldClient = (Minecraft.getMinecraft()).world;
         Entity entity = worldClient.getEntityByID(message.corpseID);
         if (entity instanceof net.fusionlord.rpgloot.entities.EntityCorpse)
+        {
             entity.readFromNBT(message.corpseTag);
+        }
         return null;
     }
 }
