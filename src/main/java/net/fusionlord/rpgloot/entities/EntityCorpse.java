@@ -46,7 +46,7 @@ public class EntityCorpse extends Entity implements IInventory
     {
         this(worldIn);
         copyData(entityLivingBase);
-        if (RPGConfig.general_settings.collectDrops)
+        if (RPGConfig.general.collectDrops)
         {
             addDrops(entityDrops);
         }
@@ -141,7 +141,7 @@ public class EntityCorpse extends Entity implements IInventory
 
     public boolean isItemValidForSlot(int index, ItemStack stack)
     {
-        return false;
+        return true;
     }
 
     public int getField(int id)
@@ -223,6 +223,7 @@ public class EntityCorpse extends Entity implements IInventory
             float var1 = this.rand.nextFloat() * 0.5F * 2.0F - this.rand.nextInt(1);
             float var2 = this.rand.nextFloat() * 0.5F * 2.0F - this.rand.nextInt(1);
             float var3 = this.rand.nextFloat() * 0.5F * 3.0F - this.rand.nextInt(2);
+
             if (RPGConfig.particles.spawnEmpty && this.drops.isEmpty())
             {
                 this.world.spawnParticle(RPGConfig.particles.emptyParticle, x + var1, y + var3, z + var2, 0.5D, 0.5D, 0.5D);
@@ -233,8 +234,7 @@ public class EntityCorpse extends Entity implements IInventory
             }
             return;
         }
-        int decayTime = RPGConfig.general_settings.corpseDecayTime;
-        if ((decayTime > -1 && this.ticksExisted / 20 / 60 > decayTime) || this.dispose)
+        if (this.dispose || (RPGConfig.general.corpseDecayTime > -1 && this.ticksExisted / 20 / 60 > RPGConfig.general.corpseDecayTime) || (!RPGConfig.general.emptyCorpses && this.drops.isEmpty() && this.ticksExisted > 20))
         {
             setDead();
         }
@@ -301,7 +301,7 @@ public class EntityCorpse extends Entity implements IInventory
 
     public boolean processInitialInteract(EntityPlayer player, EnumHand hand)
     {
-        if ((isUsableByPlayer(player) || RPGConfig.general_settings.playerStealing) && !this.world.isRemote)
+        if ((isUsableByPlayer(player) || RPGConfig.general.playerStealing) && !this.world.isRemote)
         {
             player.openGui(RPGLoot.INSTANCE, 0, this.world, getEntityId(), 0, 0);
             return true;

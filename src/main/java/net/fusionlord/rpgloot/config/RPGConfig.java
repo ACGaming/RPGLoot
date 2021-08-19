@@ -24,7 +24,7 @@ import net.fusionlord.rpgloot.RPGLoot;
 public class RPGConfig
 {
     @Config.Comment("General")
-    public static GeneralCategory general_settings = new GeneralCategory();
+    public static GeneralCategory general = new GeneralCategory();
 
     @Name("Mobs list")
     @Comment({"List of mobs to toggle on and off."})
@@ -60,7 +60,7 @@ public class RPGConfig
 
     public static boolean isBlackListed(ResourceLocation resourceLocation)
     {
-        return (mobsList != null && mobsList.containsKey(resourceLocation.toString()) && mobsList.get(resourceLocation.toString()) && general_settings.isBlacklist);
+        return (mobsList != null && mobsList.containsKey(resourceLocation.toString()) && mobsList.get(resourceLocation.toString()) && general.isBlacklist);
     }
 
     @SubscribeEvent
@@ -99,6 +99,10 @@ public class RPGConfig
         @Name("Loot stealing")
         @Comment({"Players can steal foreign player's loot from corpses."})
         public boolean playerStealing = false;
+
+        @Name("Player kills only")
+        @Comment({"Only drop corpses on player kills."})
+        public boolean playerKillsOnly = true;
     }
 
     public static class ParticleCategory
