@@ -27,7 +27,7 @@ public class LootGUI extends GuiContainer
     public void initGui()
     {
         super.initGui();
-        this.dispose = new GuiButton(0, this.guiLeft, this.guiTop - 25, this.xSize, 20, "Dispose");
+        this.dispose = new GuiButton(0, this.guiLeft, this.guiTop - 25, this.xSize, 20, "Loot & Dispose");
         addButton(this.dispose);
     }
 
