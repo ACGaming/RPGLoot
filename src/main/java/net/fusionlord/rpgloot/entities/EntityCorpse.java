@@ -46,7 +46,7 @@ public class EntityCorpse extends Entity implements IInventory
     {
         this(worldIn);
         copyData(entityLivingBase);
-        if (RPGConfig.collectDrops)
+        if (RPGConfig.general_settings.collectDrops)
         {
             addDrops(entityDrops);
         }
@@ -233,7 +233,7 @@ public class EntityCorpse extends Entity implements IInventory
             }
             return;
         }
-        int decayTime = RPGConfig.corpseDecayTime;
+        int decayTime = RPGConfig.general_settings.corpseDecayTime;
         if ((decayTime > -1 && this.ticksExisted / 20 / 60 > decayTime) || this.dispose)
         {
             setDead();
@@ -301,7 +301,7 @@ public class EntityCorpse extends Entity implements IInventory
 
     public boolean processInitialInteract(EntityPlayer player, EnumHand hand)
     {
-        if ((isUsableByPlayer(player) || RPGConfig.playerStealing) && !this.world.isRemote)
+        if ((isUsableByPlayer(player) || RPGConfig.general_settings.playerStealing) && !this.world.isRemote)
         {
             player.openGui(RPGLoot.INSTANCE, 0, this.world, getEntityId(), 0, 0);
             return true;

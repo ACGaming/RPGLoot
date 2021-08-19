@@ -23,30 +23,8 @@ import net.fusionlord.rpgloot.RPGLoot;
 @EventBusSubscriber(modid = RPGLoot.MODID)
 public class RPGConfig
 {
-    @Name("Corpse life time")
-    @RangeInt(min = -1)
-    @Comment({"Time in minutes before corpses decay. Set to -1 for no decay."})
-    public static int corpseDecayTime = 10;
-
-    @Name("Collect drops")
-    @Comment({"Drops are collected in the corpse."})
-    public static boolean collectDrops = true;
-
-    @Name("Mob list is blacklist")
-    @Comment({"Use mob list as a blacklist."})
-    public static boolean isBlacklist = true;
-
-    @Name("Player corpses")
-    @Comment({"Players spawn corpses upon death."})
-    public static boolean doPlayers = true;
-
-    @Name("Empty corpses")
-    @Comment({"Corpses with no loot are allowed to spawn."})
-    public static boolean emptyCorpses = false;
-
-    @Name("Loot stealing")
-    @Comment({"Players can steal foreign player's loot from corpses."})
-    public static boolean playerStealing = false;
+    @Config.Comment("General")
+    public static GeneralCategory general_settings = new GeneralCategory();
 
     @Name("Mobs list")
     @Comment({"List of mobs to toggle on and off."})
@@ -82,7 +60,7 @@ public class RPGConfig
 
     public static boolean isBlackListed(ResourceLocation resourceLocation)
     {
-        return (mobsList != null && mobsList.containsKey(resourceLocation.toString()) && mobsList.get(resourceLocation.toString()) && isBlacklist);
+        return (mobsList != null && mobsList.containsKey(resourceLocation.toString()) && mobsList.get(resourceLocation.toString()) && general_settings.isBlacklist);
     }
 
     @SubscribeEvent
@@ -93,6 +71,34 @@ public class RPGConfig
             RPGLoot.logger.info("Config changed");
             ConfigManager.sync(RPGLoot.MODID, Config.Type.INSTANCE);
         }
+    }
+
+    public static class GeneralCategory
+    {
+        @Name("Corpse life time")
+        @RangeInt(min = -1)
+        @Comment({"Time in minutes before corpses decay. Set to -1 for no decay."})
+        public int corpseDecayTime = 10;
+
+        @Name("Collect drops")
+        @Comment({"Drops are collected in the corpse."})
+        public boolean collectDrops = true;
+
+        @Name("Mob list is blacklist")
+        @Comment({"Use mob list as a blacklist."})
+        public boolean isBlacklist = true;
+
+        @Name("Player corpses")
+        @Comment({"Players spawn corpses upon death."})
+        public boolean doPlayers = true;
+
+        @Name("Empty corpses")
+        @Comment({"Corpses with no loot are allowed to spawn."})
+        public boolean emptyCorpses = false;
+
+        @Name("Loot stealing")
+        @Comment({"Players can steal foreign player's loot from corpses."})
+        public boolean playerStealing = false;
     }
 
     public static class ParticleCategory

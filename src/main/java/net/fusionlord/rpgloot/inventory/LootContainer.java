@@ -61,7 +61,7 @@ public class LootContainer extends Container
 
     public boolean canInteractWith(EntityPlayer player)
     {
-        if (RPGConfig.playerStealing)
+        if (RPGConfig.general_settings.playerStealing)
         {
             return true;
         }

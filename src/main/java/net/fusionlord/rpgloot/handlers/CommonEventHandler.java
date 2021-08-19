@@ -19,7 +19,7 @@ public class CommonEventHandler
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onLivingDrops(LivingDropsEvent event)
     {
-        if (event.getEntityLiving() instanceof EntityPlayer && !RPGConfig.doPlayers)
+        if (event.getEntityLiving() instanceof EntityPlayer && !RPGConfig.general_settings.doPlayers)
         {
             return;
         }
@@ -29,13 +29,13 @@ public class CommonEventHandler
             {
                 RPGLoot.logger.info("Event drops: " + event.getDrops());
             }
-            if (!RPGConfig.emptyCorpses && event.getDrops().isEmpty())
+            if (!RPGConfig.general_settings.emptyCorpses && event.getDrops().isEmpty())
             {
                 return;
             }
             (event.getEntity()).world.spawnEntity(new EntityCorpse((event.getEntity()).world, event.getEntityLiving(), (event.getSource().getTrueSource() instanceof EntityPlayer) ? (EntityPlayer) event.getSource().getTrueSource() : null, event.getDrops()));
         }
-        if (RPGConfig.collectDrops)
+        if (RPGConfig.general_settings.collectDrops)
         {
             event.setCanceled(true);
         }
