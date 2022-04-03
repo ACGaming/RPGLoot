@@ -41,6 +41,7 @@ public class LootGUI extends GuiContainer
 
     protected void drawGuiContainerBackgroundLayer(float f, int x, int y)
     {
+        super.drawDefaultBackground();
         this.mc.renderEngine.bindTexture(new ResourceLocation(RPGLoot.MODID, "textures/loottable.png"));
         drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 176, 177);
         for (Slot s : this.inventorySlots.inventorySlots)
