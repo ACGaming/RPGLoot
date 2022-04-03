@@ -1,5 +1,6 @@
 package net.fusionlord.rpgloot.handlers;
 
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
@@ -19,11 +20,11 @@ public class CommonEventHandler
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onLivingDrops(LivingDropsEvent event)
     {
-        if (event.getEntityLiving() instanceof EntityPlayer && !RPGConfig.general.doPlayers)
+        if (EntityList.getKey(event.getEntityLiving()).getResourceDomain().equals("animania") || EntityList.getKey(event.getEntityLiving()).getResourceDomain().equals("customnpcs") || (event.getEntityLiving() instanceof EntityPlayer && !RPGConfig.general.doPlayers))
         {
             return;
         }
-        if (!(event.getEntity()).world.isRemote && !RPGConfig.isBlackListed(event.getEntityLiving()))
+        if (!(event.getEntity()).world.isRemote && ((RPGConfig.general.isBlacklist && !RPGConfig.isBlackListed(event.getEntityLiving())) || (!RPGConfig.general.isBlacklist && RPGConfig.isBlackListed(event.getEntityLiving()))))
         {
             if (RPGConfig.debug.enableDebugLogging)
             {
@@ -37,10 +38,10 @@ public class CommonEventHandler
             {
                 (event.getEntity()).world.spawnEntity(new EntityCorpse((event.getEntity()).world, event.getEntityLiving(), (event.getSource().getTrueSource() instanceof EntityPlayer) ? (EntityPlayer) event.getSource().getTrueSource() : null, event.getDrops()));
             }
-        }
-        if (RPGConfig.general.collectDrops)
-        {
-            event.setCanceled(true);
+            if (RPGConfig.general.collectDrops)
+            {
+                event.setCanceled(true);
+            }
         }
     }
 
