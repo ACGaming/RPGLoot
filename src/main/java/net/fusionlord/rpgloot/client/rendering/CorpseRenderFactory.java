@@ -40,8 +40,6 @@ public class CorpseRenderFactory implements IRenderFactory<EntityCorpse>
             {
                 Entity entInstance = null;
                 String entClass = corpse.getEntityClass();
-                GlStateManager.pushMatrix();
-                GlStateManager.translate((float) x, (float) y, (float) z);
                 if (entClass.contains("EntityPlayerMP"))
                 {
                     UUID playerID = new UUID(corpse.getOldEntityData().getLong("UUIDMost"), corpse.getOldEntityData().getLong("UUIDLeast"));
@@ -59,11 +57,11 @@ public class CorpseRenderFactory implements IRenderFactory<EntityCorpse>
                 }
                 if (entInstance != null)
                 {
+                    GlStateManager.pushMatrix();
+                    GlStateManager.translate((float) x, (float) y, (float) z);
                     GlStateManager.translate(0.0D, ((entInstance.getEntityBoundingBox()).maxX - (entInstance.getEntityBoundingBox()).minX) / 2.0D, 0.0D);
-
                     GlStateManager.rotate((int) entInstance.prevRotationYaw, 0.0F, 1.0F, 0.0F);
-                    if ((entInstance.getEntityBoundingBox()).maxY > 1.5D)
-                        GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
+                    if ((entInstance.getEntityBoundingBox()).maxY > 1.5D) GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
                     if (entInstance instanceof EntitySpider)
                     {
                         GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
@@ -91,7 +89,6 @@ public class CorpseRenderFactory implements IRenderFactory<EntityCorpse>
                 {
                     RPGLoot.logger.error(exception);
                 }
-                GlStateManager.popMatrix();
             }
         }
 

@@ -103,6 +103,10 @@ public class RPGConfig
         @Name("Player kills only")
         @Comment({"Only drop corpses on player kills."})
         public boolean playerKillsOnly = true;
+
+        @Name("Report corpses")
+        @Comment({"Players are allowed to report corpses."})
+        public boolean reportCorpses = false;
     }
 
     public static class ParticleCategory

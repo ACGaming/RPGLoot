@@ -11,17 +11,14 @@ import net.minecraftforge.fml.relauncher.Side;
 
 import net.fusionlord.rpgloot.config.RPGConfig;
 import net.fusionlord.rpgloot.handlers.PacketHandler;
-import net.fusionlord.rpgloot.packets.CorpseSyncPacket;
-import net.fusionlord.rpgloot.packets.DisposePacket;
-import net.fusionlord.rpgloot.packets.LootPacket;
-import net.fusionlord.rpgloot.packets.ReqCorpseSyncPacket;
+import net.fusionlord.rpgloot.packets.*;
 
 @Mod(modid = RPGLoot.MODID, name = RPGLoot.MODNAME, version = RPGLoot.VERSION, guiFactory = "net.fusionlord.rpgloot.client.gui.GUIFactory", acceptedMinecraftVersions = "[1.12.2]")
 public class RPGLoot
 {
     public static final String MODID = "rpgloot";
     public static final String MODNAME = "RPGLoot";
-    public static final String VERSION = "1.11";
+    public static final String VERSION = "1.12";
     public static final Logger logger = new Logger();
 
     @Instance(RPGLoot.MODID)
@@ -64,5 +61,6 @@ public class RPGLoot
         this.packetHandler.registerMessage(DisposePacket.HANDLER.class, DisposePacket.class, Side.SERVER);
         this.packetHandler.registerMessage(ReqCorpseSyncPacket.HANDLER.class, ReqCorpseSyncPacket.class, Side.SERVER);
         this.packetHandler.registerMessage(CorpseSyncPacket.HANDLER.class, CorpseSyncPacket.class, Side.CLIENT);
+        this.packetHandler.registerMessage(ReportBodyPacket.HANDLER.class, ReportBodyPacket.class, Side.SERVER);
     }
 }

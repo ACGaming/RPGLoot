@@ -4,5 +4,11 @@
     "sounds": [
       "rpgloot:looting/stealing"
     ]
+  },
+  "looting.report": {
+    "category": "master",
+    "sounds": [
+      "rpgloot:looting/report"
+    ]
   }
 }
