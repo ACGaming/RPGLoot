@@ -23,10 +23,10 @@ import net.fusionlord.rpgloot.RPGLoot;
 @EventBusSubscriber(modid = RPGLoot.MODID)
 public class RPGConfig
 {
-    @Config.Comment("General")
+    @Comment("General")
     public static GeneralCategory general = new GeneralCategory();
 
-    @Name("Mobs list")
+    @Name("Mobs List")
     @Comment({"List of mobs to toggle on and off."})
     public static Map<String, Boolean> mobsList = Maps.newHashMap();
 
@@ -60,7 +60,7 @@ public class RPGConfig
 
     public static boolean isBlackListed(ResourceLocation resourceLocation)
     {
-        return (mobsList != null && mobsList.containsKey(resourceLocation.toString()) && mobsList.get(resourceLocation.toString()) && general.isBlacklist);
+        return (mobsList != null && mobsList.containsKey(resourceLocation.toString()) && mobsList.get(resourceLocation.toString()));
     }
 
     @SubscribeEvent
@@ -68,8 +68,8 @@ public class RPGConfig
     {
         if (event.getModID().equals(RPGLoot.MODID))
         {
-            RPGLoot.logger.info("Config changed");
             ConfigManager.sync(RPGLoot.MODID, Config.Type.INSTANCE);
+            RPGLoot.logger.info("Config synced");
         }
     }
 
@@ -84,8 +84,9 @@ public class RPGConfig
         @Comment({"Drops are collected in the corpse."})
         public boolean collectDrops = true;
 
+        @Config.RequiresWorldRestart
         @Name("Mob list is blacklist")
-        @Comment({"Use mob list as a blacklist."})
+        @Comment({"Use mob list as a blacklist. Otherwise it will be used as a whitelist."})
         public boolean isBlacklist = true;
 
         @Name("Player corpses")

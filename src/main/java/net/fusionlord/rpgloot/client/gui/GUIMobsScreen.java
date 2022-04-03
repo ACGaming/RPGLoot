@@ -8,22 +8,27 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.common.config.Config;
+import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 import net.minecraftforge.fml.client.config.GuiConfig;
 import net.minecraftforge.fml.client.config.GuiConfigEntries;
 import net.minecraftforge.fml.client.config.IConfigElement;
 import net.minecraftforge.fml.common.Loader;
 
+import net.fusionlord.rpgloot.RPGLoot;
+
 public class GUIMobsScreen extends GuiConfig
 {
     protected GuiButtonExt nextMod;
     protected GuiButtonExt prevMod;
+    protected GuiButtonExt apply;
     protected Map<String, List<IConfigElement>> modElements = Maps.newHashMap();
     protected int index = 0;
 
     public GUIMobsScreen(GuiConfig guiConfig)
     {
-        super(guiConfig.parentScreen, guiConfig.modID, guiConfig.title);
+        super(guiConfig.parentScreen, guiConfig.modID, true, false, guiConfig.title);
         for (IConfigElement element : guiConfig.configElements)
         {
             String modid = element.getName().split(":")[0];
@@ -37,13 +42,14 @@ public class GUIMobsScreen extends GuiConfig
     {
         super.initGui();
         this.buttonList.add(this.nextMod = new GuiButtonExt(100000, this.width - 60, 5, 55, 20, "Next Mod"));
-        this.buttonList.add(this.prevMod = new GuiButtonExt(100001, 5, 5, 55, 20, "Prev Mod"));
+        this.buttonList.add(this.prevMod = new GuiButtonExt(100001, this.width - 120, 5, 55, 20, "Prev Mod"));
+        this.buttonList.add(this.apply = new GuiButtonExt(100002, 5, 5, 55, 20, "Apply"));
         updateEntries();
     }
 
     protected void actionPerformed(GuiButton button)
     {
-        if ((button == this.nextMod && next()) || (button == this.prevMod && prev()))
+        if (button == this.apply || (button == this.nextMod && next()) || (button == this.prevMod && prev()))
         {
             updateEntries();
         }
@@ -86,5 +92,7 @@ public class GUIMobsScreen extends GuiConfig
         this.configElements.addAll(this.modElements.get(modid));
         this.titleLine2 = Loader.instance().getModList().stream().filter(c -> c.getModId().equals(modid)).collect(Collectors.toList()).get(0).getName();
         this.needsRefresh = true;
+        ConfigManager.sync(RPGLoot.MODID, Config.Type.INSTANCE);
+        RPGLoot.logger.info("Config synced");
     }
 }
