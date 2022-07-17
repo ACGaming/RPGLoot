@@ -1,6 +1,7 @@
 package net.fusionlord.rpgloot.packets;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -41,7 +42,9 @@ public class CorpseSyncPacket extends CorpsePacket
     {
         public IMessage onMessage(CorpseSyncPacket message, MessageContext ctx)
         {
-            World world = RPGLoot.proxy.getWorld();
+            //World world = RPGLoot.proxy.getWorld();
+            EntityPlayerMP player = ctx.getServerHandler().player;
+            World world = player.getEntityWorld();
             Entity entity = world.getEntityByID(message.corpseID);
             if (entity instanceof EntityCorpse)
             {
