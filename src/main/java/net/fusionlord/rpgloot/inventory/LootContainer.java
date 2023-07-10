@@ -28,6 +28,7 @@ public class LootContainer extends Container
         return this.corpse;
     }
 
+    @Override
     public ItemStack transferStackInSlot(EntityPlayer p, int i)
     {
         ItemStack itemstack = ItemStack.EMPTY;

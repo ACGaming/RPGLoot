@@ -38,6 +38,7 @@ public class GUIMobsScreen extends GuiConfig
         }
     }
 
+    @Override
     public void initGui()
     {
         super.initGui();
@@ -47,6 +48,7 @@ public class GUIMobsScreen extends GuiConfig
         updateEntries();
     }
 
+    @Override
     protected void actionPerformed(GuiButton button)
     {
         if (button == this.apply || (button == this.nextMod && next()) || (button == this.prevMod && prev()))
@@ -59,6 +61,7 @@ public class GUIMobsScreen extends GuiConfig
         }
     }
 
+    @Override
     public void updateScreen()
     {
         super.updateScreen();

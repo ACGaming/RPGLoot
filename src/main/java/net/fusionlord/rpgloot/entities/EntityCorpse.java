@@ -204,6 +204,7 @@ public class EntityCorpse extends Entity implements IInventory
 
     protected void entityInit() {}
 
+    @Override
     public void onEntityUpdate()
     {
         super.onEntityUpdate();
@@ -240,11 +241,13 @@ public class EntityCorpse extends Entity implements IInventory
         }
     }
 
+    @Override
     public boolean canBeCollidedWith()
     {
         return true;
     }
 
+    @Override
     public boolean canBePushed()
     {
         return false;
@@ -299,12 +302,12 @@ public class EntityCorpse extends Entity implements IInventory
         }
     }
 
+    @Override
     public boolean processInitialInteract(EntityPlayer player, EnumHand hand)
     {
         if ((isUsableByPlayer(player) || RPGConfig.general.playerStealing) && !this.world.isRemote)
         {
             player.openGui(RPGLoot.INSTANCE, 0, this.world, getEntityId(), 0, 0);
-            return true;
         }
         else if (!isUsableByPlayer(player) && this.world.isRemote)
         {
@@ -313,11 +316,11 @@ public class EntityCorpse extends Entity implements IInventory
             {
                 ((ClientProxy) proxy).playSound("looting.stealing");
             }
-            return true;
         }
         return true;
     }
 
+    @Override
     public boolean canRenderOnFire()
     {
         return false;

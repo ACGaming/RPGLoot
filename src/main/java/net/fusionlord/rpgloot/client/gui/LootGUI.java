@@ -27,6 +27,7 @@ public class LootGUI extends GuiContainer
         this.player = entPlayer;
     }
 
+    @Override
     public void initGui()
     {
         super.initGui();
@@ -50,6 +51,7 @@ public class LootGUI extends GuiContainer
         }
     }
 
+    @Override
     public void actionPerformed(GuiButton button)
     {
         if (button == this.dispose)

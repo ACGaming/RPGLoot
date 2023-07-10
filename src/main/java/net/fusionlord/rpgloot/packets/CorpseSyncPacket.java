@@ -1,7 +1,6 @@
 package net.fusionlord.rpgloot.packets;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -26,12 +25,14 @@ public class CorpseSyncPacket extends CorpsePacket
         corpse.writeToNBT(this.corpseTag);
     }
 
+    @Override
     public void fromBytes(ByteBuf buf)
     {
         super.fromBytes(buf);
         this.corpseTag = ByteBufUtils.readTag(buf);
     }
 
+    @Override
     public void toBytes(ByteBuf buf)
     {
         super.toBytes(buf);
@@ -42,9 +43,7 @@ public class CorpseSyncPacket extends CorpsePacket
     {
         public IMessage onMessage(CorpseSyncPacket message, MessageContext ctx)
         {
-            //World world = RPGLoot.proxy.getWorld();
-            EntityPlayerMP player = ctx.getServerHandler().player;
-            World world = player.getEntityWorld();
+            World world = RPGLoot.proxy.getWorld();
             Entity entity = world.getEntityByID(message.corpseID);
             if (entity instanceof EntityCorpse)
             {

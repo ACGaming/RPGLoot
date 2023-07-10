@@ -8,7 +8,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.passive.EntityAmbientCreature;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.util.ResourceLocation;
@@ -34,6 +33,7 @@ public class CorpseRenderFactory implements IRenderFactory<EntityCorpse>
             super(renderManager);
         }
 
+        @Override
         public void doRender(@Nonnull EntityCorpse corpse, double x, double y, double z, float whoknows, float partialTicks)
         {
             try
@@ -49,7 +49,7 @@ public class CorpseRenderFactory implements IRenderFactory<EntityCorpse>
                 else
                 {
                     Class<?> entClazz = Class.forName(entClass);
-                    entInstance = (Entity) entClazz.getConstructor(new Class[] {World.class}).newInstance(new Object[] {corpse.world});
+                    entInstance = (Entity) entClazz.getConstructor(World.class).newInstance(corpse.world);
                     if (corpse.getOldEntityData() != null)
                     {
                         entInstance.readFromNBT(corpse.getOldEntityData());
@@ -62,7 +62,7 @@ public class CorpseRenderFactory implements IRenderFactory<EntityCorpse>
                     GlStateManager.translate(0.0D, ((entInstance.getEntityBoundingBox()).maxX - (entInstance.getEntityBoundingBox()).minX) / 2.0D, 0.0D);
                     GlStateManager.rotate((int) entInstance.prevRotationYaw, 0.0F, 1.0F, 0.0F);
                     if ((entInstance.getEntityBoundingBox()).maxY > 1.5D) GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
-                    if (entInstance instanceof EntitySpider)
+                    if (entInstance.width > entInstance.height)
                     {
                         GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
                     }
@@ -97,6 +97,7 @@ public class CorpseRenderFactory implements IRenderFactory<EntityCorpse>
             return null;
         }
 
+        @Override
         public void doRenderShadowAndFire(@Nonnull Entity corpse, double x, double y, double z, float yaw, float partialTicks) {}
     }
 }

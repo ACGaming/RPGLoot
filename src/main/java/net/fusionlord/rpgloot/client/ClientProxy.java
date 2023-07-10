@@ -12,16 +12,19 @@ import net.fusionlord.rpgloot.entities.EntityCorpse;
 
 public class ClientProxy extends CommonProxy
 {
+    @Override
     public void preInit(FMLPreInitializationEvent event)
     {
         RenderingRegistry.registerEntityRenderingHandler(EntityCorpse.class, new CorpseRenderFactory());
     }
 
+    @Override
     public void postInit(FMLPostInitializationEvent event)
     {
         super.postInit(event);
     }
 
+    @Override
     public World getWorld()
     {
         return (Minecraft.getMinecraft()).world;
